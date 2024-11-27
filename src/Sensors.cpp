@@ -1,14 +1,11 @@
 #include "Sensors.h"
 #include <Arduino.h>
 
-
-Sensors::Sensors() : lastReadTime(0), readInterval(1)
-{
+Sensors::Sensors() : lastReadTime(0), readInterval(1) {
     // Constructor
 }
 
-void Sensors::begin()
-{
+void Sensors::begin() {
     pinMode(pinA, OUTPUT);
     pinMode(pinB, OUTPUT);
     pinMode(pinC, OUTPUT);
@@ -100,7 +97,7 @@ void Sensors::calibracion(int numLecturas)
         promedioNegro[i] = sumaLecturasNegro[i] / numLecturas;
         umbral[i] = (promedioBlanco[i] + promedioNegro[i]) / 2; // Umbral calculado
     }
-    // Imprimir Datos //
+    // Imprimir datos de calibración
     Serial1.println("Sensor\tPromedio Blanco\tPromedio Negro\tUmbral");
     for (int i = 0; i < numSensors; i++)
     {
@@ -109,31 +106,38 @@ void Sensors::calibracion(int numLecturas)
     Serial1.println("¡Calibración Terminada!");
 }
 
-int Sensors::posicionLinea() //1Khz
+void Sensors::setLineType(bool colorLine) {
+    this->colorLine = colorLine;  
+}
+
+int Sensors::posicionLinea()
 {
-    unsigned long currentMillis = millis();
-    if (currentMillis - lastTime >= interval) {
-        lastTime = currentMillis;  
-        update();
-        int sumaTotal = 0;
-        int sumapTotal = 0;
-        for (int i = 0; i < 8; i++)
+    update();
+    int sumaTotal = 0;
+    int sumapTotal = 0;
+    for (int i = 0; i < 8; i++)
+    {
+        int valorUmbral;
+        if (colorLine)
         {
-            int valorUmbral = (sensorValues[i] > umbral[i]) ? 1 : 0; 
-            sumapTotal += valorUmbral * i;                            
-            sumaTotal += valorUmbral;                                
-        }
-        if (sumaTotal > 0)
-        {
-            
-            int posicion = map(sumapTotal, 0, sumaTotal * 7, 100, 800);
-            posicion = constrain(posicion, 100, 800); 
-            return posicion;
+            valorUmbral = (sensorValues[i] < umbral[i]) ? 1 : 0; // Blanco sobre fondo negro
         }
         else
         {
-            Serial1.println("No se detectó línea");  
-            return -1;  
+            valorUmbral = (sensorValues[i] > umbral[i]) ? 1 : 0; // Negro sobre fondo blanco
         }
+        sumapTotal += valorUmbral * i;
+        sumaTotal += valorUmbral;
+    }
+    if (sumaTotal > 0)
+    {
+        int posicion = map(sumapTotal, 0, sumaTotal * 7, 100, 800);
+        posicion = constrain(posicion, 100, 800);
+        return posicion;
+    }
+    else
+    {
+        Serial1.println("No se detectó línea");
+        return -1;
     }
 }

@@ -5,7 +5,7 @@
 #define pinB PA1      // Pin B para multiplexor
 #define pinC PA2      // Pin C para multiplexor
 #define analogPin PA3 // Pin analógico de entrada para los sensores
- 
+
 class Sensors
 {
 public:
@@ -14,7 +14,9 @@ public:
     void update();                       // Actualiza las lecturas
     int getSensorValue(int sensorIndex); // Obtiene el valor de un sensor específico
     void calibracion(int numLecturas);   // Función de calibración
-    int posicionLinea();                 // Obtiene la posicion de la linea
+    int posicionLinea();                 // Obtiene la posición de la línea
+    void setLineType(bool colorLine);  // Establece el tipo de línea (blanca o negra)
+
 private:
     int sensorValues[8];                  // Arreglo de 8 sensores
     int umbral[8];                        // Arreglo de umbrales
@@ -22,8 +24,7 @@ private:
     const unsigned long readInterval = 1; // Intervalo de lectura
     const int numSensors = 8;             // Número de sensores
     void selectChannel(int channel);      // Selecciona el canal en el multiplexor
-    unsigned long lastTime = 0;           
-    unsigned long interval = 1;
+    bool colorLine = false;             // Determina si la línea es blanca (1) o negra (0)
 };
 
 #endif
