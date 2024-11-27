@@ -11,8 +11,8 @@ void setup()
   pinMode(PC13, OUTPUT);
   Serial1.begin(115200);
   sensors.begin();
-  sensors.calibracion(5);
-  sensors.setLineType(1);
+  sensors.calibracion(10);
+  sensors.setLineType(1); 
 }
 
 void loop()
@@ -21,10 +21,10 @@ void loop()
   Serial1.println(pos_Line);
   if (pos_Line < 400 || pos_Line > 500)
   {
-    digitalWrite(13, HIGH);
+    digitalWrite(PC13, 0);
   }
   else
   {
-    digitalWrite(13, LOW);
+    digitalWrite(PC13, 1);
   }
 }
