@@ -15,7 +15,7 @@ public:
     int getSensorValue(int sensorIndex); // Obtiene el valor de un sensor específico
     void calibracion(int numLecturas);   // Función de calibración
     int posicionLinea();                 // Obtiene la posición de la línea
-    void setLineType(bool colorLine);  // Establece el tipo de línea (blanca o negra)
+    void LineType(bool colorLine);  // Establece el tipo de línea (blanca o negra)
 
 private:
     int sensorValues[8];                  // Arreglo de 8 sensores

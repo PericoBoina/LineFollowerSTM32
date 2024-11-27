@@ -12,7 +12,7 @@ void setup()
   Serial1.begin(115200);
   sensors.begin();
   sensors.calibracion(10);
-  sensors.setLineType(1); 
+  sensors.LineType(1);
 }
 
 void loop()

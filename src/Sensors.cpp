@@ -106,7 +106,7 @@ void Sensors::calibracion(int numLecturas)
     Serial1.println("¡Calibración Terminada!");
 }
 
-void Sensors::setLineType(bool colorLine) {
+void Sensors::LineType(bool colorLine) {
     this->colorLine = colorLine;  
 }
 
