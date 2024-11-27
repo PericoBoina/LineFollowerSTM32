@@ -1,23 +1,29 @@
 #include <Arduino.h>
-#include "Mux4051.h"
+#include "Sensors.h"
 
-Mux4051 mux(PA0, PA1, PA2, PA3);
+HardwareSerial Serial1(PA10, PA9);
+Sensors sensors;
+
+int pos_Line = 0;
 
 void setup()
 {
-  pinMode(PA0, OUTPUT);
-  pinMode(PA1, OUTPUT);
-  pinMode(PA2, OUTPUT);
-  pinMode(PA3, INPUT);
   pinMode(PC13, OUTPUT);
-  Serial.begin(115200);
+  Serial1.begin(115200);
+  sensors.begin();
+  sensors.calibracion(5);
 }
 
 void loop()
 {
-  Serial.println("Hola Currito");
-  digitalWrite(PC13, 1);
-  delay(250);
-  digitalWrite(PC13, 0);
-  delay(250);
-};
+  pos_Line = sensors.posicionLinea();
+  Serial1.println(pos_Line);
+  if (pos_Line < 400 || pos_Line > 500)
+  {
+    digitalWrite(13, HIGH);
+  }
+  else
+  {
+    digitalWrite(13, LOW);
+  }
+}
