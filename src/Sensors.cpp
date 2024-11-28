@@ -9,7 +9,7 @@ void Sensors::begin() {
     pinMode(pinA, OUTPUT);
     pinMode(pinB, OUTPUT);
     pinMode(pinC, OUTPUT);
-    pinMode(analogPin, INPUT);
+    pinMode(pinZ, INPUT);
 }
 
 void Sensors::update()
@@ -21,7 +21,7 @@ void Sensors::update()
         for (int i = 0; i < numSensors; i++)
         {
             selectChannel(i);
-            sensorValues[i] = analogRead(analogPin);
+            sensorValues[i] = analogRead(pinZ);
         }
     }
 }

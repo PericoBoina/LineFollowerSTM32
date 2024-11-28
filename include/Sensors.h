@@ -1,10 +1,10 @@
 #ifndef SENSORS_H
 #define SENSORS_H
 
-#define pinA PA0      // Pin A para multiplexor
-#define pinB PA1      // Pin B para multiplexor
-#define pinC PA2      // Pin C para multiplexor
-#define analogPin PA3 // Pin analógico de entrada para los sensores
+#define pinA PA0 // Pin A para multiplexor
+#define pinB PA1 // Pin B para multiplexor
+#define pinC PA2 // Pin C para multiplexor
+#define pinZ PA3 // Pin analógico de entrada para los sensores
 
 class Sensors
 {
